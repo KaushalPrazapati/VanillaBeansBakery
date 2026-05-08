@@ -1,0 +1,2547 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vanilla Beans Bakery | Premium Cakes in Kolkata</title>
+    <meta
+      name="description"
+      content="Premium Cakes, Cheesecakes & Cookies made with love in Kolkata. Women-owned bakery offering delivery, takeaway, and custom cakes."
+    />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <style>
+      /* CSS Variables */
+      :root {
+        --primary-dark: #3e2723; /* Deep Chocolate */
+        --primary: #5c3a21; /* Chocolate Brown */
+        --secondary: #fdfbf7; /* Soft Cream */
+        --accent: #e8b4b8; /* Pastel Pink */
+        --accent-dark: #d29196;
+        --beige: #f4e1d2; /* Warm Beige */
+        --text-main: #4a3b32;
+        --text-light: #7a6a61;
+        --white: #ffffff;
+        --success: #25d366; /* WhatsApp Green */
+
+        --font-heading: "Playfair Display", serif;
+        --font-body: "Poppins", sans-serif;
+
+        --transition: all 0.3s ease;
+        --glass-bg: rgba(255, 255, 255, 0.85);
+        --glass-border: rgba(255, 255, 255, 0.3);
+        --shadow: 0 8px 32px rgba(92, 58, 33, 0.08);
+      }
+
+      /* Resets & Base Styles */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family: var(--font-body);
+        color: var(--text-main);
+        background-color: var(--secondary);
+        line-height: 1.6;
+        overflow-x: hidden;
+      }
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        font-family: var(--font-heading);
+        color: var(--primary-dark);
+        font-weight: 600;
+      }
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+      ul {
+        list-style: none;
+      }
+      img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+      }
+      button {
+        border: none;
+        background: none;
+        cursor: pointer;
+        font-family: inherit;
+      }
+
+      /* Reusable Classes */
+      .container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+      .section {
+        padding: 100px 0;
+      }
+      .section-header {
+        text-align: center;
+        margin-bottom: 60px;
+      }
+      .section-title {
+        font-size: 2.5rem;
+        margin-bottom: 15px;
+        position: relative;
+        display: inline-block;
+      }
+      .section-title::after {
+        content: "";
+        position: absolute;
+        bottom: -5px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 60px;
+        height: 3px;
+        background-color: var(--accent);
+        border-radius: 2px;
+      }
+      .section-subtitle {
+        color: var(--text-light);
+        font-size: 1.1rem;
+      }
+
+      /* SPA Views */
+      .page-view {
+        display: none;
+        animation: fadeIn 0.5s ease;
+      }
+      .page-view.active {
+        display: block;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Buttons */
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 12px 30px;
+        border-radius: 50px;
+        font-weight: 500;
+        transition: var(--transition);
+        cursor: pointer;
+        font-size: 1rem;
+        gap: 10px;
+      }
+      .btn-primary {
+        background-color: var(--primary);
+        color: var(--white);
+        box-shadow: 0 10px 20px rgba(92, 58, 33, 0.2);
+      }
+      .btn-primary:hover {
+        background-color: var(--primary-dark);
+        transform: translateY(-3px);
+        box-shadow: 0 15px 25px rgba(92, 58, 33, 0.3);
+      }
+      .btn-accent {
+        background-color: var(--accent);
+        color: var(--primary-dark);
+        box-shadow: 0 10px 20px rgba(232, 180, 184, 0.3);
+      }
+      .btn-accent:hover {
+        background-color: var(--accent-dark);
+        transform: translateY(-3px);
+        box-shadow: 0 15px 25px rgba(232, 180, 184, 0.4);
+      }
+      .btn-outline {
+        background-color: transparent;
+        color: var(--white);
+        border: 2px solid var(--white);
+      }
+      .btn-outline:hover {
+        background-color: var(--white);
+        color: var(--primary);
+        transform: translateY(-3px);
+      }
+      .btn-success {
+        background-color: var(--success);
+        color: var(--white);
+        box-shadow: 0 10px 20px rgba(37, 211, 102, 0.2);
+      }
+      .btn-success:hover {
+        background-color: #1ebe57;
+        transform: translateY(-3px);
+        box-shadow: 0 15px 25px rgba(37, 211, 102, 0.3);
+      }
+
+      /* Scroll Progress Bar */
+      .scroll-progress {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 0%;
+        height: 4px;
+        background: var(--accent);
+        z-index: 2000;
+        transition: width 0.1s ease;
+      }
+
+      /* Preloader */
+      .preloader {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: var(--secondary);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        transition: opacity 0.5s ease;
+      }
+      .loader-cake {
+        font-size: 3rem;
+        animation: bounce 1s infinite alternate;
+      }
+      @keyframes bounce {
+        0% {
+          transform: translateY(0);
+        }
+        100% {
+          transform: translateY(-20px);
+        }
+      }
+
+      /* Navigation */
+      .navbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        padding: 20px 0;
+        z-index: 1000;
+        transition: var(--transition);
+      }
+      .navbar.scrolled {
+        background: rgba(253, 251, 247, 0.95);
+        backdrop-filter: blur(10px);
+        padding: 15px 0;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+      }
+      .nav-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .logo {
+        font-family: var(--font-heading);
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: var(--white);
+        transition: var(--transition);
+      }
+      .navbar.scrolled .logo,
+      .navbar.scrolled .nav-links a,
+      .navbar.scrolled .cart-icon {
+        color: var(--primary-dark);
+      }
+      .navbar.page-scrolled {
+        background: rgba(253, 251, 247, 0.95);
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+      }
+      .navbar.page-scrolled .logo,
+      .navbar.page-scrolled .nav-links a,
+      .navbar.page-scrolled .cart-icon {
+        color: var(--primary-dark);
+      }
+      .nav-links {
+        display: flex;
+        gap: 30px;
+        align-items: center;
+      }
+      .nav-links a {
+        color: var(--white);
+        font-weight: 500;
+        position: relative;
+        transition: var(--transition);
+        cursor: pointer;
+      }
+      .nav-links a::after {
+        content: "";
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background-color: var(--accent);
+        transition: var(--transition);
+      }
+      .nav-links a:hover::after,
+      .nav-links a.active::after {
+        width: 100%;
+      }
+      .hamburger {
+        display: none;
+        cursor: pointer;
+        font-size: 1.5rem;
+        color: var(--white);
+      }
+      .navbar.scrolled .hamburger,
+      .navbar.page-scrolled .hamburger {
+        color: var(--primary-dark);
+      }
+
+      .cart-icon {
+        position: relative;
+        font-size: 1.2rem;
+      }
+      .cart-badge {
+        position: absolute;
+        top: -8px;
+        right: -10px;
+        background: var(--accent);
+        color: var(--primary-dark);
+        font-size: 0.7rem;
+        font-weight: 700;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      /* Cart Sidebar */
+      .cart-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 1500;
+        opacity: 0;
+        visibility: hidden;
+        transition: var(--transition);
+      }
+      .cart-overlay.active {
+        opacity: 1;
+        visibility: visible;
+      }
+      .cart-sidebar {
+        position: fixed;
+        top: 0;
+        right: -400px;
+        width: 400px;
+        max-width: 100%;
+        height: 100vh;
+        background: var(--white);
+        z-index: 1501;
+        transition: var(--transition);
+        display: flex;
+        flex-direction: column;
+        box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+      }
+      .cart-sidebar.active {
+        right: 0;
+      }
+      .cart-header {
+        padding: 20px;
+        border-bottom: 1px solid var(--beige);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .cart-header h3 {
+        margin: 0;
+        font-size: 1.5rem;
+      }
+      .close-cart {
+        font-size: 1.5rem;
+        color: var(--text-light);
+        cursor: pointer;
+        transition: var(--transition);
+      }
+      .close-cart:hover {
+        color: var(--primary);
+        transform: rotate(90deg);
+      }
+      .cart-items {
+        flex: 1;
+        overflow-y: auto;
+        padding: 20px;
+      }
+      .cart-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        padding-bottom: 20px;
+        border-bottom: 1px dashed var(--beige);
+      }
+      .cart-item-info h4 {
+        font-family: var(--font-body);
+        font-size: 1rem;
+        margin-bottom: 5px;
+      }
+      .cart-item-price {
+        color: var(--primary);
+        font-weight: 600;
+      }
+      .cart-item-controls {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .qty-btn {
+        width: 25px;
+        height: 25px;
+        border-radius: 50%;
+        background: var(--beige);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--primary-dark);
+        transition: var(--transition);
+      }
+      .qty-btn:hover {
+        background: var(--accent);
+        color: var(--white);
+      }
+      .cart-empty {
+        text-align: center;
+        color: var(--text-light);
+        margin-top: 50px;
+      }
+      .cart-footer {
+        padding: 20px;
+        border-top: 1px solid var(--beige);
+        background: var(--secondary);
+      }
+      .cart-total {
+        display: flex;
+        justify-content: space-between;
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: var(--primary-dark);
+        margin-bottom: 20px;
+      }
+
+      /* Hero Section */
+      .hero {
+        position: relative;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        background: url("https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80")
+          center/cover no-repeat;
+        overflow: hidden;
+      }
+      .hero::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          to right,
+          rgba(44, 30, 22, 0.8),
+          rgba(44, 30, 22, 0.4)
+        );
+      }
+      .hero-content {
+        position: relative;
+        z-index: 2;
+        max-width: 800px;
+        color: var(--white);
+      }
+      .hero-subtitle {
+        font-family: var(--font-body);
+        font-size: 1.2rem;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        margin-bottom: 20px;
+        display: block;
+        color: var(--accent);
+        animation: fadeInDown 1s ease forwards;
+      }
+      .hero-title {
+        font-size: 4.5rem;
+        line-height: 1.2;
+        margin-bottom: 20px;
+        color: var(--white);
+        animation: fadeInUp 1s ease forwards 0.3s;
+        opacity: 0;
+      }
+      .hero-desc {
+        font-size: 1.2rem;
+        margin-bottom: 40px;
+        max-width: 600px;
+        animation: fadeInUp 1s ease forwards 0.6s;
+        opacity: 0;
+      }
+      .hero-buttons {
+        display: flex;
+        gap: 20px;
+        animation: fadeInUp 1s ease forwards 0.9s;
+        opacity: 0;
+      }
+
+      /* Shared Header for Inner Pages */
+      .inner-hero {
+        position: relative;
+        padding: 150px 0 80px;
+        background: url("https://images.unsplash.com/photo-1558961363-fa8fdf82db35?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80")
+          center/cover no-repeat;
+        text-align: center;
+        color: var(--white);
+      }
+      .inner-hero::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(62, 39, 35, 0.85);
+      }
+      .inner-hero-content {
+        position: relative;
+        z-index: 2;
+      }
+      .inner-hero-title {
+        font-size: 3.5rem;
+        color: var(--white);
+        margin-bottom: 10px;
+      }
+
+      /* Floating Elements */
+      .floating-element {
+        position: absolute;
+        font-size: 2rem;
+        opacity: 0.3;
+        z-index: 1;
+        filter: blur(1px);
+        animation: float 15s infinite linear;
+      }
+      .fe-1 {
+        top: 20%;
+        left: 10%;
+        animation-delay: 0s;
+      }
+      .fe-2 {
+        top: 60%;
+        left: 80%;
+        animation-delay: -5s;
+        font-size: 3rem;
+      }
+      .fe-3 {
+        top: 80%;
+        left: 20%;
+        animation-delay: -10s;
+      }
+      .fe-4 {
+        top: 30%;
+        left: 70%;
+        animation-delay: -2s;
+        font-size: 2.5rem;
+      }
+      .fe-5 {
+        top: 70%;
+        left: 50%;
+        animation-delay: -7s;
+      }
+      @keyframes float {
+        0% {
+          transform: translateY(0) rotate(0deg);
+        }
+        50% {
+          transform: translateY(-100px) rotate(180deg);
+        }
+        100% {
+          transform: translateY(0) rotate(360deg);
+        }
+      }
+      @keyframes fadeInDown {
+        from {
+          opacity: 0;
+          transform: translateY(-30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* About Section */
+      .about-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 60px;
+        align-items: center;
+      }
+      .about-image {
+        position: relative;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: var(--shadow);
+      }
+      .about-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+      }
+      .about-image:hover img {
+        transform: scale(1.05);
+      }
+      .about-experience {
+        position: absolute;
+        bottom: -20px;
+        right: -20px;
+        background: var(--white);
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: var(--shadow);
+        text-align: center;
+        border: 1px solid var(--beige);
+      }
+      .about-experience h3 {
+        font-size: 2.5rem;
+        color: var(--primary);
+        margin-bottom: 5px;
+      }
+      .about-content h2 {
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+      }
+      .about-content p {
+        margin-bottom: 20px;
+        color: var(--text-light);
+      }
+      .badge {
+        display: inline-block;
+        background: var(--beige);
+        color: var(--primary-dark);
+        padding: 8px 15px;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        font-weight: 500;
+        margin-bottom: 20px;
+      }
+
+      /* Featured Cakes & Menu Grid */
+      .featured {
+        background-color: var(--beige);
+      }
+      .cake-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+      }
+      .cake-card {
+        background: var(--glass-bg);
+        backdrop-filter: blur(10px);
+        border: 1px solid var(--glass-border);
+        border-radius: 20px;
+        padding: 20px;
+        text-align: center;
+        transition: var(--transition);
+        box-shadow: var(--shadow);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100%;
+      }
+      .cake-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 40px rgba(92, 58, 33, 0.15);
+      }
+      .cake-img-wrap {
+        width: 100%;
+        height: 250px;
+        border-radius: 15px;
+        overflow: hidden;
+        margin-bottom: 20px;
+      }
+      .cake-img-wrap img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+      }
+      .cake-card:hover .cake-img-wrap img {
+        transform: scale(1.1);
+      }
+      .cake-card h3 {
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+      }
+      .cake-card p {
+        color: var(--text-light);
+        font-size: 0.95rem;
+        margin-bottom: 15px;
+        flex-grow: 1;
+      }
+      .cake-price {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: var(--primary);
+        margin-bottom: 20px;
+      }
+
+      /* Full Menu Categories */
+      .menu-category {
+        margin-bottom: 60px;
+      }
+      .menu-category-title {
+        border-bottom: 2px solid var(--beige);
+        padding-bottom: 15px;
+        margin-bottom: 30px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+
+      /* Why Choose Us */
+      .features {
+        background-color: var(--primary-dark);
+        color: var(--white);
+      }
+      .features .section-title {
+        color: var(--white);
+      }
+      .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 30px;
+      }
+      .feature-card {
+        text-align: center;
+        padding: 40px 20px;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 15px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        transition: var(--transition);
+      }
+      .feature-card:hover {
+        background: rgba(255, 255, 255, 0.1);
+        transform: translateY(-10px);
+      }
+      .feature-icon {
+        width: 70px;
+        height: 70px;
+        background: var(--accent);
+        color: var(--primary-dark);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        margin: 0 auto 20px;
+        transition: var(--transition);
+      }
+      .feature-card:hover .feature-icon {
+        transform: rotateY(180deg);
+      }
+      .feature-card h3 {
+        color: var(--white);
+        margin-bottom: 15px;
+      }
+      .feature-card p {
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 0.95rem;
+      }
+
+      /* Custom Cake Form */
+      .order-form-container {
+        background: var(--white);
+        padding: 50px;
+        border-radius: 20px;
+        box-shadow: var(--shadow);
+        max-width: 800px;
+        margin: 0 auto;
+      }
+      .form-group {
+        margin-bottom: 25px;
+      }
+      .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+      }
+      .form-label {
+        display: block;
+        font-weight: 500;
+        margin-bottom: 8px;
+        color: var(--primary-dark);
+      }
+      .form-control {
+        width: 100%;
+        padding: 15px;
+        border: 1px solid var(--beige);
+        border-radius: 10px;
+        font-family: var(--font-body);
+        font-size: 1rem;
+        transition: var(--transition);
+        background: var(--secondary);
+      }
+      .form-control:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(92, 58, 33, 0.1);
+        background: var(--white);
+      }
+      textarea.form-control {
+        resize: vertical;
+        min-height: 120px;
+      }
+
+      /* Gallery */
+      .gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 20px;
+      }
+      .gallery-item {
+        position: relative;
+        border-radius: 15px;
+        overflow: hidden;
+        height: 300px;
+        cursor: pointer;
+      }
+      .gallery-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.6s ease;
+      }
+      .gallery-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(92, 58, 33, 0.6);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: var(--transition);
+      }
+      .gallery-item:hover img {
+        transform: scale(1.1);
+      }
+      .gallery-item:hover .gallery-overlay {
+        opacity: 1;
+      }
+      .gallery-overlay i {
+        color: var(--white);
+        font-size: 2rem;
+        transform: translateY(20px);
+        transition: var(--transition);
+      }
+      .gallery-item:hover .gallery-overlay i {
+        transform: translateY(0);
+      }
+
+      /* Lightbox */
+      .lightbox {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.9);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 3000;
+        opacity: 0;
+        visibility: hidden;
+        transition: var(--transition);
+      }
+      .lightbox.active {
+        opacity: 1;
+        visibility: visible;
+      }
+      .lightbox img {
+        max-width: 90%;
+        max-height: 90%;
+        border-radius: 10px;
+        box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
+        transform: scale(0.8);
+        transition: transform 0.4s ease;
+      }
+      .lightbox.active img {
+        transform: scale(1);
+      }
+      .lightbox-close {
+        position: absolute;
+        top: 30px;
+        right: 40px;
+        color: var(--white);
+        font-size: 2rem;
+        cursor: pointer;
+        transition: var(--transition);
+      }
+      .lightbox-close:hover {
+        color: var(--accent);
+        transform: rotate(90deg);
+      }
+
+      /* Reviews */
+      .reviews {
+        background-color: var(--beige);
+      }
+      .review-slider-wrapper {
+        position: relative;
+        width: 100%;
+        padding: 10px 0;
+      }
+      .review-slider {
+        display: flex;
+        gap: 30px;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        scrollbar-width: none;
+        padding-bottom: 20px;
+      }
+      .review-slider::-webkit-scrollbar {
+        display: none;
+      }
+      .review-card {
+        background: var(--white);
+        padding: 40px 30px;
+        border-radius: 20px;
+        box-shadow: var(--shadow);
+        position: relative;
+        transition: var(--transition);
+        flex: 0 0 calc(33.333% - 20px);
+        scroll-snap-align: start;
+      }
+      .review-card:hover {
+        transform: translateY(-5px);
+      }
+      .review-card::before {
+        content: "\201C";
+        font-family: var(--font-heading);
+        font-size: 6rem;
+        color: var(--beige);
+        position: absolute;
+        top: -10px;
+        left: 20px;
+        line-height: 1;
+        z-index: 0;
+      }
+      .review-content {
+        position: relative;
+        z-index: 1;
+      }
+      .stars {
+        color: #f5b041;
+        margin-bottom: 15px;
+      }
+      .review-text {
+        font-size: 1.1rem;
+        font-style: italic;
+        margin-bottom: 20px;
+        color: var(--text-main);
+      }
+      .reviewer {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+      .reviewer-avatar {
+        width: 50px;
+        height: 50px;
+        background: var(--accent);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--white);
+        font-weight: 600;
+        font-size: 1.2rem;
+      }
+      .reviewer-info h4 {
+        font-family: var(--font-body);
+        font-size: 1rem;
+        margin: 0;
+      }
+
+      /* Theme Cake Tags */
+      .theme-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 15px;
+        justify-content: center;
+      }
+      .theme-tag {
+        background: var(--secondary);
+        border: 1px solid var(--beige);
+        padding: 8px 15px;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        color: var(--text-main);
+        transition: var(--transition);
+        cursor: default;
+      }
+      .theme-tag:hover {
+        background: var(--accent);
+        color: var(--white);
+        border-color: var(--accent);
+      }
+
+      /* CTA Section */
+      .cta-section {
+        background:
+          linear-gradient(rgba(92, 58, 33, 0.8), rgba(92, 58, 33, 0.9)),
+          url("https://images.unsplash.com/photo-1558961363-fa8fdf82db35?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80")
+            center/cover fixed;
+        text-align: center;
+        color: var(--white);
+        padding: 120px 0;
+      }
+      .cta-section .section-title {
+        color: var(--white);
+        border: none;
+      }
+      .cta-section .section-title::after {
+        display: none;
+      }
+
+      /* Contact Section */
+      .contact-grid {
+        display: grid;
+        grid-template-columns: 1fr 1.5fr;
+        gap: 50px;
+        background: var(--white);
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: var(--shadow);
+      }
+      .contact-info {
+        padding: 50px;
+        background: var(--primary);
+        color: var(--white);
+      }
+      .contact-info h3 {
+        color: var(--white);
+        font-size: 2rem;
+        margin-bottom: 30px;
+      }
+      .info-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 20px;
+        margin-bottom: 30px;
+      }
+      .info-icon {
+        width: 40px;
+        height: 40px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        flex-shrink: 0;
+      }
+      .info-content h4 {
+        color: var(--accent);
+        margin-bottom: 5px;
+        font-family: var(--font-body);
+        font-size: 1.1rem;
+      }
+      .info-content p {
+        color: rgba(255, 255, 255, 0.8);
+      }
+      .social-links {
+        display: flex;
+        gap: 15px;
+        margin-top: 40px;
+      }
+      .social-links a {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: var(--white);
+        color: var(--primary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: var(--transition);
+      }
+      .social-links a:hover {
+        background: var(--accent);
+        color: var(--white);
+        transform: translateY(-3px);
+      }
+      .contact-map {
+        height: 100%;
+        min-height: 400px;
+      }
+      .contact-map iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+      }
+
+      /* Footer */
+      .footer {
+        background: var(--primary-dark);
+        color: rgba(255, 255, 255, 0.7);
+        padding: 60px 0 20px;
+        text-align: center;
+      }
+      .footer-logo {
+        font-family: var(--font-heading);
+        font-size: 2rem;
+        color: var(--white);
+        margin-bottom: 20px;
+        display: inline-block;
+      }
+      .footer-divider {
+        width: 50px;
+        height: 2px;
+        background: var(--accent);
+        margin: 20px auto;
+      }
+      .footer-bottom {
+        margin-top: 40px;
+        font-size: 0.9rem;
+      }
+
+      /* Toast Notification */
+      .toast {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%) translateY(100px);
+        background: var(--primary-dark);
+        color: var(--white);
+        padding: 12px 25px;
+        border-radius: 50px;
+        font-size: 0.9rem;
+        font-weight: 500;
+        z-index: 3000;
+        transition: 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      }
+      .toast.show {
+        transform: translateX(-50%) translateY(0);
+      }
+
+      /* Responsive Design */
+      @media (max-width: 992px) {
+        .hero-title {
+          font-size: 3.5rem;
+        }
+        .about-grid,
+        .form-row,
+        .contact-grid {
+          grid-template-columns: 1fr;
+        }
+        .about-experience {
+          right: 20px;
+          bottom: 20px;
+        }
+        .review-card {
+          flex: 0 0 calc(50% - 15px);
+        }
+      }
+      @media (max-width: 768px) {
+        .nav-links {
+          position: absolute;
+          top: 100%;
+          left: 0;
+          width: 100%;
+          background: var(--white);
+          flex-direction: column;
+          align-items: center;
+          padding: 30px 0;
+          gap: 20px;
+          box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+          clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+          transition: clip-path 0.4s ease;
+        }
+        .nav-links.active {
+          clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+        }
+        .nav-links a,
+        .nav-links .cart-icon {
+          color: var(--text-main) !important;
+        }
+        .hamburger {
+          display: block;
+        }
+        .hero-title,
+        .inner-hero-title {
+          font-size: 2.5rem;
+        }
+        .hero-desc {
+          font-size: 1rem;
+        }
+        .hero-buttons {
+          flex-direction: column;
+        }
+        .section {
+          padding: 70px 0;
+        }
+        .section-title {
+          font-size: 2rem;
+        }
+        .gallery-grid {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 10px;
+        }
+        .gallery-item {
+          height: 200px;
+        }
+        .review-card {
+          flex: 0 0 100%;
+        }
+        .cart-sidebar {
+          width: 100%;
+          right: -100%;
+        }
+        .order-form-container {
+          padding: 30px 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Preloader -->
+    <div class="preloader" id="preloader">
+      <i
+        class="fa-solid fa-cake-candles loader-cake"
+        style="color: var(--primary)"
+      ></i>
+    </div>
+
+    <!-- Scroll Progress -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+      <div class="container nav-container">
+        <a href="#home" class="logo">Vanilla Beans</a>
+        <div class="hamburger" id="hamburger">
+          <i class="fa-solid fa-bars"></i>
+        </div>
+        <ul class="nav-links" id="navLinks">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#full-menu">Full Menu</a></li>
+          <li><a href="#custom-cake">Custom Cake Order</a></li>
+          <li>
+            <a
+              href="javascript:void(0)"
+              onclick="toggleCart()"
+              class="cart-icon"
+            >
+              <i class="fa-solid fa-cart-shopping"></i>
+              <span class="cart-badge" id="cart-count">0</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Cart Sidebar -->
+    <div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+    <div class="cart-sidebar" id="cartSidebar">
+      <div class="cart-header">
+        <h3>Your Cart</h3>
+        <i class="fa-solid fa-xmark close-cart" onclick="toggleCart()"></i>
+      </div>
+      <div class="cart-items" id="cartItems">
+        <div class="cart-empty">
+          Your cart is empty. Let's add some sweetness!
+        </div>
+      </div>
+      <div class="cart-footer">
+        <div class="cart-total">
+          <span>Total:</span>
+          <span id="cartTotal">₹0</span>
+        </div>
+        <button
+          class="btn btn-success"
+          style="width: 100%"
+          onclick="checkoutCart()"
+        >
+          <i class="fa-brands fa-whatsapp"></i> Checkout on WhatsApp
+        </button>
+      </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">Added to cart!</div>
+
+    <!-- ==================== HOME VIEW ==================== -->
+    <main id="view-home" class="page-view active">
+      <!-- Hero Section -->
+      <section class="hero" id="home">
+        <div class="floating-element fe-1">🧁</div>
+        <div class="floating-element fe-2">🍪</div>
+        <div class="floating-element fe-3">🍰</div>
+        <div class="floating-element fe-4">🍩</div>
+        <div class="floating-element fe-5">✨</div>
+
+        <div class="container">
+          <div class="hero-content">
+            <span class="hero-subtitle">Vanilla Beans Bakery, Kolkata</span>
+            <h1 class="hero-title">Crafting Sweet Memories</h1>
+            <p class="hero-desc">
+              Premium Cakes, Cheesecakes & Cookies made with love in Kolkata.
+              Experience luxury in every bite.
+            </p>
+            <div class="hero-buttons">
+              <a href="#full-menu" class="btn btn-primary">Order Online</a>
+              <a href="#custom-cake" class="btn btn-outline"
+                >Request Custom Cake</a
+              >
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- About Section -->
+      <section class="section" id="about">
+        <div class="container about-grid reveal">
+          <div class="about-image">
+            <img
+              src="https://images.unsplash.com/photo-1557925923-33b251dc3296?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+              alt="Baking Process"
+            />
+            <div class="about-experience">
+              <h3>
+                4.8
+                <i
+                  class="fa-solid fa-star"
+                  style="color: #f5b041; font-size: 1.5rem"
+                ></i>
+              </h3>
+              <p>Customer Rating</p>
+            </div>
+          </div>
+          <div class="about-content">
+            <span class="badge"
+              ><i class="fa-solid fa-crown"></i> Women-Owned Bakery</span
+            >
+            <h2 class="section-title">An Elegant Bakery Story</h2>
+            <p>
+              Welcome to Vanilla Beans, a premium artisanal bakery nestled in
+              the heart of Kolkata. Born out of a deep passion for baking and an
+              eye for aesthetics, our women-owned kitchen crafts more than just
+              desserts—we create edible art.
+            </p>
+            <p>
+              Every cake, cheesecake, and cookie is meticulously handcrafted
+              using the finest ingredients, ensuring a luxurious experience in
+              every single bite. From custom celebration cakes to everyday
+              cravings, we bring warmth and sweetness to your special moments.
+            </p>
+            <br />
+            <a href="#full-menu" class="btn btn-accent">View Full Menu</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Why Choose Us -->
+      <section class="section features" id="features">
+        <div class="container">
+          <div class="section-header reveal">
+            <h2 class="section-title">The Vanilla Beans Difference</h2>
+            <p class="section-subtitle" style="color: rgba(255, 255, 255, 0.7)">
+              Why our customers keep coming back for more
+            </p>
+          </div>
+
+          <div class="features-grid">
+            <div class="feature-card reveal">
+              <div class="feature-icon"><i class="fa-solid fa-leaf"></i></div>
+              <h3>Fresh Ingredients</h3>
+              <p>
+                Baked fresh daily using only the highest quality, locally
+                sourced ingredients.
+              </p>
+            </div>
+            <div class="feature-card reveal" style="transition-delay: 0.1s">
+              <div class="feature-icon"><i class="fa-solid fa-gem"></i></div>
+              <h3>Premium Quality</h3>
+              <p>
+                We never compromise on taste or texture. Experience luxury
+                baking.
+              </p>
+            </div>
+            <div class="feature-card reveal" style="transition-delay: 0.2s">
+              <div class="feature-icon">
+                <i class="fa-solid fa-truck-fast"></i>
+              </div>
+              <h3>Fast Delivery</h3>
+              <p>
+                Safe and timely delivery across Kolkata to ensure your cake
+                arrives perfect.
+              </p>
+            </div>
+            <div class="feature-card reveal" style="transition-delay: 0.3s">
+              <div class="feature-icon">
+                <i class="fa-solid fa-palette"></i>
+              </div>
+              <h3>Custom Designs</h3>
+              <p>
+                Your vision, our creation. Bespoke designs for any special
+                occasion.
+              </p>
+            </div>
+            <div class="feature-card reveal" style="transition-delay: 0.4s">
+              <!-- FIXED ICON HERE -->
+              <div class="feature-icon">
+                <i class="fa-solid fa-hands-bubbles"></i>
+              </div>
+              <h3>Hygienic Kitchen</h3>
+              <p>
+                Strict safety and sanitation protocols maintained in our
+                workspace.
+              </p>
+            </div>
+            <div class="feature-card reveal" style="transition-delay: 0.5s">
+              <div class="feature-icon"><i class="fa-solid fa-heart"></i></div>
+              <h3>Handmade with Love</h3>
+              <p>
+                Every order receives personal attention from our passionate
+                bakers.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Gallery Section -->
+      <section class="section" id="gallery">
+        <div class="container">
+          <div class="section-header reveal">
+            <h2 class="section-title">Sweet Gallery</h2>
+            <p class="section-subtitle">
+              A glimpse into our artisanal creations
+            </p>
+          </div>
+
+          <div class="gallery-grid">
+            <div class="gallery-item reveal" onclick="openLightbox(this)">
+              <img
+                src="https://images.unsplash.com/photo-1542826438-bd32f43d626f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                alt="Bakery Item 1"
+              />
+              <div class="gallery-overlay">
+                <i class="fa-solid fa-magnifying-glass-plus"></i>
+              </div>
+            </div>
+            <div class="gallery-item reveal" onclick="openLightbox(this)">
+              <img
+                src="https://images.unsplash.com/photo-1488477181946-6428a0291777?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                alt="Bakery Item 2"
+              />
+              <div class="gallery-overlay">
+                <i class="fa-solid fa-magnifying-glass-plus"></i>
+              </div>
+            </div>
+            <div class="gallery-item reveal" onclick="openLightbox(this)">
+              <img
+                src="https://images.unsplash.com/photo-1571115177098-24ecfa147000?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                alt="Bakery Item 3"
+              />
+              <div class="gallery-overlay">
+                <i class="fa-solid fa-magnifying-glass-plus"></i>
+              </div>
+            </div>
+            <div class="gallery-item reveal" onclick="openLightbox(this)">
+              <img
+                src="https://images.unsplash.com/photo-1588195538326-c5b1e9f80a1b?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                alt="Bakery Item 4"
+              />
+              <div class="gallery-overlay">
+                <i class="fa-solid fa-magnifying-glass-plus"></i>
+              </div>
+            </div>
+            <div class="gallery-item reveal" onclick="openLightbox(this)">
+              <img
+                src="https://images.unsplash.com/photo-1606313564200-e75d5e30476c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                alt="Bakery Item 5"
+              />
+              <div class="gallery-overlay">
+                <i class="fa-solid fa-magnifying-glass-plus"></i>
+              </div>
+            </div>
+            <div class="gallery-item reveal" onclick="openLightbox(this)">
+              <img
+                src="https://images.unsplash.com/photo-1557308536-ee471ef2c390?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                alt="Bakery Item 6"
+              />
+              <div class="gallery-overlay">
+                <i class="fa-solid fa-magnifying-glass-plus"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Reviews Section -->
+      <section class="section reviews" id="reviews">
+        <div class="container">
+          <div class="section-header reveal">
+            <h2 class="section-title">Client Love</h2>
+            <p class="section-subtitle">
+              What our wonderful customers have to say
+            </p>
+          </div>
+
+          <div class="review-slider-wrapper">
+            <div class="review-slider">
+              <div class="review-card reveal">
+                <div class="review-content">
+                  <div class="stars">
+                    <i class="fa-solid fa-star"></i
+                    ><i class="fa-solid fa-star"></i
+                    ><i class="fa-solid fa-star"></i
+                    ><i class="fa-solid fa-star"></i
+                    ><i class="fa-solid fa-star"></i>
+                  </div>
+                  <p class="review-text">
+                    "Best cheesecake in Kolkata! The Lotus Biscoff flavor was
+                    out of this world. Highly recommend Vanilla Beans for any
+                    celebration."
+                  </p>
+                  <div class="reviewer">
+                    <div class="reviewer-avatar">S</div>
+                    <div class="reviewer-info">
+                      <h4>Sneha Roy</h4>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="review-card reveal" style="transition-delay: 0.1s">
+                <div class="review-content">
+                  <div class="stars">
+                    <i class="fa-solid fa-star"></i
+                    ><i class="fa-solid fa-star"></i
+                    ><i class="fa-solid fa-star"></i
+                    ><i class="fa-solid fa-star"></i
+                    ><i class="fa-solid fa-star"></i>
+                  </div>
+                  <p class="review-text">
+                    "Their custom cakes look absolutely premium. I ordered a
+                    floral themed cake for my parents' anniversary and it was
+                    flawless."
+                  </p>
+                  <div class="reviewer">
+                    <div class="reviewer-avatar">R</div>
+                    <div class="reviewer-info">
+                      <h4>Rahul Das</h4>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="review-card reveal" style="transition-delay: 0.2s">
+                <div class="review-content">
+                  <div class="stars">
+                    <i class="fa-solid fa-star"></i
+                    ><i class="fa-solid fa-star"></i
+                    ><i class="fa-solid fa-star"></i
+                    ><i class="fa-solid fa-star"></i
+                    ><i class="fa-solid fa-star"></i>
+                  </div>
+                  <p class="review-text">
+                    "Amazing taste and presentation. The packaging itself feels
+                    so luxurious. You can really tell they use high quality
+                    ingredients."
+                  </p>
+                  <div class="reviewer">
+                    <div class="reviewer-avatar">A</div>
+                    <div class="reviewer-info">
+                      <h4>Ankita M.</h4>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div style="text-align: center; margin-top: 40px" class="reveal">
+            <a
+              href="https://www.google.com/maps/place/Vanilla+Beans+Bakery,+Kolkata"
+              target="_blank"
+              class="btn btn-outline"
+              style="border-color: var(--primary); color: var(--primary)"
+            >
+              <i class="fa-brands fa-google"></i> Read More Reviews on Google
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Contact Section -->
+      <section class="section" id="contact">
+        <div class="container">
+          <div class="section-header reveal">
+            <h2 class="section-title">Get in Touch</h2>
+            <p class="section-subtitle">We'd love to hear from you</p>
+          </div>
+
+          <div class="contact-grid reveal">
+            <div class="contact-info">
+              <h3>Contact Info</h3>
+
+              <div class="info-item">
+                <div class="info-icon">
+                  <i class="fa-solid fa-location-dot"></i>
+                </div>
+                <div class="info-content">
+                  <h4>Visit Us</h4>
+                  <p>
+                    JM 10/4, near Vidyasagar Sporting Club, Vidyasagar Pally,
+                    Ashwini Nagar, Baguihati, Kolkata, West Bengal 700159
+                  </p>
+                </div>
+              </div>
+
+              <div class="info-item">
+                <div class="info-icon"><i class="fa-solid fa-phone"></i></div>
+                <div class="info-content">
+                  <h4>Call / WhatsApp</h4>
+                  <p>+91 84430 92817</p>
+                </div>
+              </div>
+
+              <div class="info-item">
+                <div class="info-icon"><i class="fa-solid fa-clock"></i></div>
+                <div class="info-content">
+                  <h4>Opening Hours</h4>
+                  <p>
+                    Delivery: 10:00 AM - 10:00 PM<br />Takeaway & Pickup
+                    Available
+                  </p>
+                </div>
+              </div>
+
+              <div class="social-links">
+                <a
+                  href="https://wa.me/918443092817"
+                  target="_blank"
+                  title="WhatsApp"
+                  ><i class="fa-brands fa-whatsapp"></i
+                ></a>
+                <a href="#" target="_blank" title="Instagram"
+                  ><i class="fa-brands fa-instagram"></i
+                ></a>
+                <a href="#" target="_blank" title="Facebook"
+                  ><i class="fa-brands fa-facebook-f"></i
+                ></a>
+              </div>
+            </div>
+
+            <div class="contact-map">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d58952.047446651035!2d88.3839016!3d22.5602844!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a0275e9e995dacb%3A0xb86b8eb8a6777b75!2sVanilla%20Beans%20Bakery%2C%20Kolkata!5e0!3m2!1sen!2sin!4v1778208256335!5m2!1sen!2sin"
+                width="100%"
+                height="100%"
+                style="border: 0"
+                allowfullscreen=""
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+              ></iframe>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ==================== FULL MENU VIEW ==================== -->
+    <main id="view-full-menu" class="page-view">
+      <section class="inner-hero">
+        <div class="container inner-hero-content">
+          <h1 class="inner-hero-title">Our Gourmet Menu</h1>
+          <p>
+            Add your favorite items to the cart and securely checkout via
+            WhatsApp.
+          </p>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <!-- Category: Signature Cheesecakes -->
+          <div class="menu-category">
+            <h2 class="menu-category-title">
+              <i class="fa-solid fa-cheese" style="color: var(--accent)"></i>
+              Signature Cheesecakes
+            </h2>
+            <div class="cake-grid">
+              <div class="cake-card">
+                <div class="cake-img-wrap">
+                  <img
+                    src="https://images.unsplash.com/photo-1528736235302-52922df5c122?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                    alt="Lotus Biscoff"
+                  />
+                </div>
+                <h3>Lotus Biscoff</h3>
+                <p>
+                  Rich cream cheese blended with original Lotus Biscoff spread
+                  and biscuit crust.
+                </p>
+                <div class="cake-price">₹1200</div>
+                <button
+                  class="btn btn-primary"
+                  onclick="addToCart('Lotus Biscoff Cheesecake', 1200)"
+                  style="width: 100%"
+                >
+                  Add to Cart
+                </button>
+              </div>
+              <div class="cake-card">
+                <div class="cake-img-wrap">
+                  <img
+                    src="https://images.unsplash.com/photo-1533134242443-d4fd215305ad?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                    alt="Hazelnut Ferrero"
+                  />
+                </div>
+                <h3>Hazelnut Ferrero Rocher</h3>
+                <p>
+                  Decadent chocolate hazelnut cheesecake topped with Ferrero
+                  Rocher.
+                </p>
+                <div class="cake-price">₹1300</div>
+                <button
+                  class="btn btn-primary"
+                  onclick="
+                    addToCart('Hazelnut Ferrero Rocher Cheesecake', 1300)
+                  "
+                  style="width: 100%"
+                >
+                  Add to Cart
+                </button>
+              </div>
+              <div class="cake-card">
+                <div class="cake-img-wrap">
+                  <img
+                    src="https://images.unsplash.com/photo-1565958011703-44f9829ba187?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                    alt="Blueberry"
+                  />
+                </div>
+                <h3>Blueberry Cheesecake</h3>
+                <p>
+                  Classic baked cheesecake swirled and topped with sweet
+                  blueberry compote.
+                </p>
+                <div class="cake-price">₹1100</div>
+                <button
+                  class="btn btn-primary"
+                  onclick="addToCart('Blueberry Cheesecake', 1100)"
+                  style="width: 100%"
+                >
+                  Add to Cart
+                </button>
+              </div>
+              <div class="cake-card">
+                <div class="cake-img-wrap">
+                  <img
+                    src="https://images.unsplash.com/photo-1598214886806-c87b84b7078b?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                    alt="Oreo"
+                  />
+                </div>
+                <h3>Oreo Cheesecake</h3>
+                <p>
+                  Creamy vanilla filling loaded with crushed Oreo cookies inside
+                  and out.
+                </p>
+                <div class="cake-price">₹900</div>
+                <button
+                  class="btn btn-primary"
+                  onclick="addToCart('Oreo Cheesecake', 900)"
+                  style="width: 100%"
+                >
+                  Add to Cart
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Category: Custom & Theme Cakes -->
+          <div class="menu-category">
+            <h2 class="menu-category-title">
+              <i
+                class="fa-solid fa-cake-candles"
+                style="color: var(--accent)"
+              ></i>
+              Premium Celebration Cakes
+            </h2>
+            <p style="color: var(--text-light); margin-bottom: 20px">
+              * Base prices listed. Final price varies by weight and
+              customization. We will confirm details on WhatsApp.
+            </p>
+            <div class="cake-grid">
+              <div class="cake-card">
+                <h3>Boho Cake</h3>
+                <p>
+                  Earthy tones, dried flowers, and elegant minimalist textures.
+                </p>
+                <div class="cake-price">From ₹1500</div>
+                <button
+                  class="btn btn-outline"
+                  style="border-color: var(--primary); color: var(--primary)"
+                  onclick="addToCart('Boho Cake (Base)', 1500)"
+                >
+                  Add to Cart
+                </button>
+              </div>
+              <div class="cake-card">
+                <h3>Floral Cake with Macarons</h3>
+                <p>
+                  Beautiful fresh floral arrangement adorned with authentic
+                  French macarons.
+                </p>
+                <div class="cake-price">From ₹1800</div>
+                <button
+                  class="btn btn-outline"
+                  style="border-color: var(--primary); color: var(--primary)"
+                  onclick="addToCart('Floral Cake with Macarons (Base)', 1800)"
+                >
+                  Add to Cart
+                </button>
+              </div>
+              <div class="cake-card">
+                <h3>Number / Photo Cake</h3>
+                <p>
+                  Personalized cutout shapes or edible image prints for special
+                  milestones.
+                </p>
+                <div class="cake-price">From ₹1200</div>
+                <button
+                  class="btn btn-outline"
+                  style="border-color: var(--primary); color: var(--primary)"
+                  onclick="addToCart('Number/Photo Cake (Base)', 1200)"
+                >
+                  Add to Cart
+                </button>
+              </div>
+              <div class="cake-card">
+                <h3>Pearl Bow & Wings Cake</h3>
+                <p>
+                  Luxurious elegant cakes perfect for engagements or grand
+                  celebrations.
+                </p>
+                <div class="cake-price">From ₹1600</div>
+                <button
+                  class="btn btn-outline"
+                  style="border-color: var(--primary); color: var(--primary)"
+                  onclick="addToCart('Pearl Bow/Wings Cake (Base)', 1600)"
+                >
+                  Add to Cart
+                </button>
+              </div>
+            </div>
+
+            <div
+              style="
+                background: var(--white);
+                padding: 30px;
+                border-radius: 15px;
+                margin-top: 30px;
+                box-shadow: var(--shadow);
+              "
+            >
+              <h4 style="margin-bottom: 15px">Available Themes</h4>
+              <div class="theme-tags">
+                <span class="theme-tag">Xbox Theme</span
+                ><span class="theme-tag">Momo Lovers</span
+                ><span class="theme-tag">Barbie</span>
+                <span class="theme-tag">Whiskey</span
+                ><span class="theme-tag">Frozen</span
+                ><span class="theme-tag">Dad Cake</span>
+                <span class="theme-tag">Baby Shark</span
+                ><span class="theme-tag">Jungle Theme</span
+                ><span class="theme-tag">Deadpool</span>
+                <span class="theme-tag">Gym Theme</span
+                ><span class="theme-tag">6 Month Bday</span
+                ><span class="theme-tag">Girl Theme</span>
+                <span class="theme-tag">Reception</span
+                ><span class="theme-tag">Baby Shower</span
+                ><span class="theme-tag">Cocomelon</span>
+                <span class="theme-tag">Spiderman</span
+                ><span class="theme-tag">Hunger Games</span>
+              </div>
+              <div style="text-align: center; margin-top: 20px">
+                <a href="#custom-cake" class="btn btn-primary"
+                  >Order a Specific Theme</a
+                >
+              </div>
+            </div>
+          </div>
+
+          <!-- Category: Bento & Vintage -->
+          <div class="menu-category">
+            <h2 class="menu-category-title">
+              <i class="fa-solid fa-gift" style="color: var(--accent)"></i>
+              Bento, Vintage & Sheet Cakes
+            </h2>
+            <div class="cake-grid">
+              <div class="cake-card">
+                <h3>Cute & Simple Bentos</h3>
+                <p>
+                  Perfect mini cakes (250g-300g) for intimate celebrations.
+                  Custom text available.
+                </p>
+                <div class="cake-price">₹450</div>
+                <button
+                  class="btn btn-outline"
+                  style="border-color: var(--primary); color: var(--primary)"
+                  onclick="addToCart('Simple Bento Cake', 450)"
+                >
+                  Add to Cart
+                </button>
+              </div>
+              <div class="cake-card">
+                <h3>Message Reveal Cake</h3>
+                <p>
+                  Hidden message inside the cake that reveals itself as you
+                  pull!
+                </p>
+                <div class="cake-price">₹650</div>
+                <button
+                  class="btn btn-outline"
+                  style="border-color: var(--primary); color: var(--primary)"
+                  onclick="addToCart('Message Reveal Cake', 650)"
+                >
+                  Add to Cart
+                </button>
+              </div>
+              <div class="cake-card">
+                <h3>Vintage Heart Cake</h3>
+                <p>
+                  Retro style intricate piping and cherries. Classic Pinterest
+                  aesthetic.
+                </p>
+                <div class="cake-price">From ₹900</div>
+                <button
+                  class="btn btn-outline"
+                  style="border-color: var(--primary); color: var(--primary)"
+                  onclick="addToCart('Vintage Cake (Base)', 900)"
+                >
+                  Add to Cart
+                </button>
+              </div>
+              <div class="cake-card">
+                <h3>Flat Sheet Cake</h3>
+                <p>
+                  Large single-layer cake, perfect for cutting at big parties.
+                </p>
+                <div class="cake-price">From ₹1200</div>
+                <button
+                  class="btn btn-outline"
+                  style="border-color: var(--primary); color: var(--primary)"
+                  onclick="addToCart('Flat Sheet Cake', 1200)"
+                >
+                  Add to Cart
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Category: Chocolates & Cupcakes -->
+          <div class="menu-category">
+            <h2 class="menu-category-title">
+              <i
+                class="fa-solid fa-cubes-stacked"
+                style="color: var(--accent)"
+              ></i>
+              Cupcakes & Artisanal Chocolates
+            </h2>
+            <div class="cake-grid">
+              <div class="cake-card">
+                <h3>Box of 6 Truffle Cupcakes</h3>
+                <p>Rich, moist chocolate cupcakes topped with silky ganache.</p>
+                <div class="cake-price">₹400</div>
+                <button
+                  class="btn btn-outline"
+                  style="border-color: var(--primary); color: var(--primary)"
+                  onclick="addToCart('Box of 6 Truffle Cupcakes', 400)"
+                >
+                  Add to Cart
+                </button>
+              </div>
+              <div class="cake-card">
+                <h3>Edible Image Cupcakes (Box of 6)</h3>
+                <p>Custom logos or photos printed on fondant icing.</p>
+                <div class="cake-price">₹550</div>
+                <button
+                  class="btn btn-outline"
+                  style="border-color: var(--primary); color: var(--primary)"
+                  onclick="addToCart('Edible Image Cupcakes (6)', 550)"
+                >
+                  Add to Cart
+                </button>
+              </div>
+              <div class="cake-card">
+                <h3>XL Chocolate Pack</h3>
+                <p>
+                  Dark Chocolate, Hazelnut, Almond, or Cranberry artisanal
+                  barks.
+                </p>
+                <div class="cake-price">₹350</div>
+                <button
+                  class="btn btn-outline"
+                  style="border-color: var(--primary); color: var(--primary)"
+                  onclick="addToCart('XL Chocolate Pack', 350)"
+                >
+                  Add to Cart
+                </button>
+              </div>
+              <div class="cake-card">
+                <h3>Chocolate Coated Dates</h3>
+                <p>
+                  Premium Medjool dates stuffed with nuts and coated in rich
+                  chocolate.
+                </p>
+                <div class="cake-price">₹450</div>
+                <button
+                  class="btn btn-outline"
+                  style="border-color: var(--primary); color: var(--primary)"
+                  onclick="addToCart('Chocolate Coated Dates Pack', 450)"
+                >
+                  Add to Cart
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ==================== CUSTOM CAKE ORDER VIEW ==================== -->
+    <main id="view-custom-cake" class="page-view">
+      <section class="inner-hero">
+        <div class="container inner-hero-content">
+          <h1 class="inner-hero-title">Custom Cake Order</h1>
+          <p>
+            Bring your dream cake to life. Fill out the details below and we
+            will contact you with a quote.
+          </p>
+        </div>
+      </section>
+
+      <section class="section" style="background: var(--beige)">
+        <div class="container">
+          <div class="order-form-container">
+            <form id="customCakeForm" onsubmit="submitCustomOrder(event)">
+              <h3
+                style="
+                  margin-bottom: 30px;
+                  border-bottom: 2px solid var(--beige);
+                  padding-bottom: 10px;
+                "
+              >
+                Contact & Event Details
+              </h3>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label">Full Name *</label>
+                  <input
+                    type="text"
+                    id="custName"
+                    class="form-control"
+                    required
+                    placeholder="Your Name"
+                  />
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Phone / WhatsApp Number *</label>
+                  <input
+                    type="tel"
+                    id="custPhone"
+                    class="form-control"
+                    required
+                    placeholder="+91 XXXXX XXXXX"
+                  />
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label">Event Date *</label>
+                  <input
+                    type="date"
+                    id="custDate"
+                    class="form-control"
+                    required
+                  />
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Event Type</label>
+                  <select id="custEvent" class="form-control">
+                    <option value="Birthday">Birthday</option>
+                    <option value="Anniversary">Anniversary</option>
+                    <option value="Wedding">Wedding</option>
+                    <option value="Baby Shower">Baby Shower</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
+              </div>
+
+              <h3
+                style="
+                  margin-top: 20px;
+                  margin-bottom: 30px;
+                  border-bottom: 2px solid var(--beige);
+                  padding-bottom: 10px;
+                "
+              >
+                Cake Details
+              </h3>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label">Cake Flavor Preference</label>
+                  <select id="custFlavor" class="form-control">
+                    <option value="Chocolate Truffle">Chocolate Truffle</option>
+                    <option value="Vanilla Strawberry">
+                      Vanilla Strawberry
+                    </option>
+                    <option value="Red Velvet">Red Velvet</option>
+                    <option value="Pineapple">Pineapple</option>
+                    <option value="Lotus Biscoff">Lotus Biscoff</option>
+                    <option value="Other/Not Sure">
+                      Other / Let's Discuss
+                    </option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Estimated Weight</label>
+                  <select id="custWeight" class="form-control">
+                    <option value="Bento (250g)">Bento (approx 250g)</option>
+                    <option value="Half Kg">0.5 Kg</option>
+                    <option value="1 Kg">1 Kg</option>
+                    <option value="1.5 Kg">1.5 Kg</option>
+                    <option value="2 Kg+">2 Kg or more</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Theme / Design Description *</label>
+                <textarea
+                  id="custDesc"
+                  class="form-control"
+                  required
+                  placeholder="Describe how you want the cake to look. E.g., 'A 2-tier jungle theme cake for a 1-year-old with animal figurines.'"
+                ></textarea>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label"
+                  >Reference Image Link (Optional)</label
+                >
+                <input
+                  type="url"
+                  id="custLink"
+                  class="form-control"
+                  placeholder="Paste an Instagram/Pinterest link if you have a reference image"
+                />
+                <small
+                  style="
+                    color: var(--text-light);
+                    margin-top: 5px;
+                    display: block;
+                  "
+                  >You can also send images directly to our WhatsApp after
+                  submitting this form.</small
+                >
+              </div>
+
+              <button
+                type="submit"
+                class="btn btn-success"
+                style="width: 100%; font-size: 1.1rem; padding: 15px"
+              >
+                <i class="fa-brands fa-whatsapp"></i> Send Order Request via
+                WhatsApp
+              </button>
+            </form>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer (Shared across all views) -->
+    <footer class="footer">
+      <div class="container">
+        <a href="#home" class="footer-logo">Vanilla Beans Bakery</a>
+        <p>Crafting Sweet Memories in Kolkata</p>
+        <div class="footer-divider"></div>
+        <p>Premium Cakes | Cheesecakes | Cookies | Custom Designs</p>
+        <div class="footer-bottom">
+          <p>
+            &copy; 2026 Vanilla Beans Bakery. All Rights Reserved. Designed with
+            <i class="fa-solid fa-heart" style="color: var(--accent)"></i>
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Lightbox for Gallery -->
+    <div class="lightbox" id="lightbox">
+      <i class="fa-solid fa-xmark lightbox-close" onclick="closeLightbox()"></i>
+      <img src="" alt="Expanded Image" id="lightbox-img" />
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+      const phone_number = "918443092817";
+
+      // Preloader
+      window.addEventListener("load", () => {
+        const preloader = document.getElementById("preloader");
+        preloader.style.opacity = "0";
+        setTimeout(() => {
+          preloader.style.display = "none";
+        }, 500);
+
+        // Initial Route
+        handleRouting();
+      });
+
+      // -------------------------
+      // SPA ROUTING
+      // -------------------------
+      const views = {
+        home: document.getElementById("view-home"),
+        fullMenu: document.getElementById("view-full-menu"),
+        customCake: document.getElementById("view-custom-cake"),
+      };
+      const navItems = document.querySelectorAll(
+        ".nav-links a:not(.cart-icon)",
+      );
+
+      function handleRouting() {
+        let hash = window.location.hash;
+
+        // Hide all views
+        Object.values(views).forEach((view) => view.classList.remove("active"));
+        navItems.forEach((item) => item.classList.remove("active"));
+
+        // Show target view based on hash
+        if (hash === "#full-menu") {
+          views.fullMenu.classList.add("active");
+          document
+            .querySelector('a[href="#full-menu"]')
+            .classList.add("active");
+          window.scrollTo(0, 0);
+        } else if (hash === "#custom-cake") {
+          views.customCake.classList.add("active");
+          document
+            .querySelector('a[href="#custom-cake"]')
+            .classList.add("active");
+          window.scrollTo(0, 0);
+        } else {
+          // Default to Home
+          views.home.classList.add("active");
+          document.querySelector('a[href="#home"]').classList.add("active");
+
+          // If it's a specific section in home (e.g., #about), scroll to it
+          if (hash && hash !== "#home") {
+            const target = document.querySelector(hash);
+            if (target && views.home.contains(target)) {
+              setTimeout(() => {
+                target.scrollIntoView({ behavior: "smooth" });
+              }, 100);
+            } else {
+              window.scrollTo(0, 0);
+            }
+          } else {
+            window.scrollTo(0, 0);
+          }
+        }
+
+        // Close mobile menu if open
+        navLinks.classList.remove("active");
+        hamburger.innerHTML = '<i class="fa-solid fa-bars"></i>';
+      }
+
+      window.addEventListener("hashchange", handleRouting);
+
+      // -------------------------
+      // CART SYSTEM
+      // -------------------------
+      let cart = [];
+
+      function toggleCart() {
+        document.getElementById("cartSidebar").classList.toggle("active");
+        document.getElementById("cartOverlay").classList.toggle("active");
+      }
+
+      function addToCart(name, price) {
+        const existingItem = cart.find((item) => item.name === name);
+        if (existingItem) {
+          existingItem.qty += 1;
+        } else {
+          cart.push({ name: name, price: price, qty: 1 });
+        }
+        updateCartUI();
+        showToast();
+      }
+
+      function changeQty(index, amount) {
+        cart[index].qty += amount;
+        if (cart[index].qty <= 0) {
+          cart.splice(index, 1);
+        }
+        updateCartUI();
+      }
+
+      function updateCartUI() {
+        const cartItemsContainer = document.getElementById("cartItems");
+        const cartCount = document.getElementById("cart-count");
+        const cartTotal = document.getElementById("cartTotal");
+
+        cartItemsContainer.innerHTML = "";
+        let total = 0;
+        let totalItems = 0;
+
+        if (cart.length === 0) {
+          cartItemsContainer.innerHTML =
+            '<div class="cart-empty">Your cart is empty. Let\'s add some sweetness!</div>';
+        } else {
+          cart.forEach((item, index) => {
+            const itemTotal = item.price * item.qty;
+            total += itemTotal;
+            totalItems += item.qty;
+
+            cartItemsContainer.innerHTML += `
+                        <div class="cart-item">
+                            <div class="cart-item-info">
+                                <h4>${item.name}</h4>
+                                <div class="cart-item-price">₹${item.price} x ${item.qty}</div>
+                            </div>
+                            <div class="cart-item-controls">
+                                <button class="qty-btn" onclick="changeQty(${index}, -1)"><i class="fa-solid fa-minus" style="font-size:10px;"></i></button>
+                                <span>${item.qty}</span>
+                                <button class="qty-btn" onclick="changeQty(${index}, 1)"><i class="fa-solid fa-plus" style="font-size:10px;"></i></button>
+                            </div>
+                        </div>
+                    `;
+          });
+        }
+
+        cartCount.innerText = totalItems;
+        cartTotal.innerText = `₹${total}`;
+      }
+
+      function showToast() {
+        const toast = document.getElementById("toast");
+        toast.classList.add("show");
+        setTimeout(() => {
+          toast.classList.remove("show");
+        }, 3000);
+      }
+
+      function checkoutCart() {
+        if (cart.length === 0) {
+          alert("Your cart is empty!");
+          return;
+        }
+
+        let message =
+          "Hello Vanilla Beans Bakery! 🧁\n\nI would like to place an order from your online menu:\n\n";
+        let total = 0;
+
+        cart.forEach((item) => {
+          const itemTotal = item.price * item.qty;
+          message += `${item.qty}x ${item.name} - ₹${itemTotal}\n`;
+          total += itemTotal;
+        });
+
+        message += `\n*Estimated Total: ₹${total}*\n\nPlease let me know the delivery/pickup details and payment options.`;
+
+        const encodedMessage = encodeURIComponent(message);
+        window.open(
+          `https://wa.me/${phone_number}?text=${encodedMessage}`,
+          "_blank",
+        );
+
+        // Optional: clear cart after checkout
+        // cart = []; updateCartUI(); toggleCart();
+      }
+
+      // -------------------------
+      // CUSTOM CAKE FORM
+      // -------------------------
+      function submitCustomOrder(event) {
+        event.preventDefault();
+
+        const name = document.getElementById("custName").value;
+        const phone = document.getElementById("custPhone").value;
+        const date = document.getElementById("custDate").value;
+        const eventType = document.getElementById("custEvent").value;
+        const flavor = document.getElementById("custFlavor").value;
+        const weight = document.getElementById("custWeight").value;
+        const desc = document.getElementById("custDesc").value;
+        const link = document.getElementById("custLink").value;
+
+        let message = `Hello Vanilla Beans Bakery! ✨\n\nI would like to request a Custom Cake quote.\n\n`;
+        message += `*Name:* ${name}\n`;
+        message += `*Phone:* ${phone}\n`;
+        message += `*Event Date:* ${date}\n`;
+        message += `*Event Type:* ${eventType}\n`;
+        message += `*Flavor:* ${flavor}\n`;
+        message += `*Weight:* ${weight}\n\n`;
+        message += `*Design Description:*\n${desc}\n`;
+
+        if (link) {
+          message += `\n*Reference Link:* ${link}\n`;
+        }
+
+        message += `\nLooking forward to hearing from you!`;
+
+        const encodedMessage = encodeURIComponent(message);
+        window.open(
+          `https://wa.me/${phone_number}?text=${encodedMessage}`,
+          "_blank",
+        );
+      }
+
+      // -------------------------
+      // UI INTERACTIONS
+      // -------------------------
+
+      // Navbar Scroll Effect & Scroll Progress
+      const navbar = document.getElementById("navbar");
+      const scrollProgress = document.getElementById("scrollProgress");
+
+      window.addEventListener("scroll", () => {
+        // Adjust navbar style based on view and scroll
+        const isHome = views.home.classList.contains("active");
+        if (window.scrollY > 50) {
+          navbar.classList.add("scrolled");
+        } else {
+          navbar.classList.remove("scrolled");
+        }
+
+        // Always add a slight dark tint to nav text on non-home pages if at top
+        if (!isHome && window.scrollY <= 50) {
+          navbar.classList.add("page-scrolled");
+        } else {
+          navbar.classList.remove("page-scrolled");
+        }
+
+        // Scroll Progress
+        const winScroll =
+          document.body.scrollTop || document.documentElement.scrollTop;
+        const height =
+          document.documentElement.scrollHeight -
+          document.documentElement.clientHeight;
+        const scrolled = (winScroll / height) * 100;
+        scrollProgress.style.width = scrolled + "%";
+      });
+
+      // Mobile Menu Toggle
+      const hamburger = document.getElementById("hamburger");
+      const navLinks = document.getElementById("navLinks");
+
+      hamburger.addEventListener("click", () => {
+        navLinks.classList.toggle("active");
+        if (navLinks.classList.contains("active")) {
+          hamburger.innerHTML = '<i class="fa-solid fa-xmark"></i>';
+        } else {
+          hamburger.innerHTML = '<i class="fa-solid fa-bars"></i>';
+        }
+      });
+
+      // Scroll Reveal Animation (Intersection Observer)
+      const revealOptions = {
+        threshold: 0.15,
+        rootMargin: "0px 0px -50px 0px",
+      };
+      const revealOnScroll = new IntersectionObserver(function (
+        entries,
+        observer,
+      ) {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add("active");
+          observer.unobserve(entry.target);
+        });
+      }, revealOptions);
+
+      // Re-observe when view changes (simple implementation)
+      setInterval(() => {
+        document
+          .querySelectorAll(".reveal:not(.active)")
+          .forEach((el) => revealOnScroll.observe(el));
+      }, 1000);
+
+      // Lightbox
+      const lightbox = document.getElementById("lightbox");
+      const lightboxImg = document.getElementById("lightbox-img");
+      function openLightbox(element) {
+        lightboxImg.src = element.querySelector("img").src;
+        lightbox.classList.add("active");
+        document.body.style.overflow = "hidden";
+      }
+      function closeLightbox() {
+        lightbox.classList.remove("active");
+        document.body.style.overflow = "auto";
+      }
+      lightbox.addEventListener("click", (e) => {
+        if (e.target === lightbox) closeLightbox();
+      });
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && lightbox.classList.contains("active"))
+          closeLightbox();
+      });
+    </script>
+  </body>
+</html>
